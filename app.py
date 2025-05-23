@@ -5,18 +5,15 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-# File paths - ensure these are in the correct directory
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 EXPENSE_FILE = os.path.join(BASE_DIR, 'expenses.csv')
 TODO_FILE = os.path.join(BASE_DIR, 'todo.txt')
 INCOME_FILE = os.path.join(BASE_DIR, 'income.txt')
 
-# Create files if they don't exist
 for file in [EXPENSE_FILE, TODO_FILE, INCOME_FILE]:
     if not os.path.exists(file):
         open(file, 'a').close()
 
-# ========== UTILITY FUNCTIONS ==========
 def read_expenses():
     expenses = []
     if os.path.exists(EXPENSE_FILE) and os.path.getsize(EXPENSE_FILE) > 0:
@@ -68,18 +65,15 @@ def delete_todo_task(index):
         with open(TODO_FILE, 'w') as f:
             f.write("\n".join(tasks))
 
-# ========== ROUTES ==========
 @app.route('/')
 def dashboard():
     expenses = read_expenses()
     income = read_income()
     todo_list = read_todo()
 
-    # Total expense calculation
     total_expense = sum(float(row['Amount']) for row in expenses) if expenses else 0
     remaining = income - total_expense
 
-    # Category breakdown
     categories = {}
     for row in expenses:
         cat = row['Category']
@@ -98,7 +92,6 @@ def expenses():
     expenses = read_expenses()
     total_expense = sum(float(row['Amount']) for row in expenses) if expenses else 0
     
-    # Category breakdown
     categories = {}
     for row in expenses:
         cat = row['Category']

@@ -11,7 +11,6 @@
 - Python + Flask
 - HTML (Jinja2)
 - CSS
-- Font Awesome
 - CSV for data storage
 
 ## 📁 How to Run Locally
