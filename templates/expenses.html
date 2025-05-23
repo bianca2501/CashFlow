@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Expenses | CashFlow{% endblock %}
+
+{% block content %}
+<div class="expenses-page">
+    <header class="page-header">
+        <h2><i class="fas fa-wallet"></i> Expenses</h2>
+        <p>Track where your money goes</p>
+    </header>
+
+    <div class="expense-controls">
+        <form action="{{ url_for('add_expense_route') }}" method="POST" class="expense-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-tags"></i>
+                        <input type="text" name="category" id="category" placeholder="e.g., Food, Rent" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-rupee-sign"></i>
+                        <input type="number" step="0.01" name="amount" id="amount" placeholder="0.00" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="note">Note (optional)</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-sticky-note"></i>
+                        <input type="text" name="note" id="note" placeholder="Any details">
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-add">Add Expense <i class="fas fa-plus"></i></button>
+            </div>
+        </form>
+    </div>
+
+    <div class="expense-stats">
+        <div class="stat-card">
+            <h3>Total Spent</h3>
+            <p class="stat-value">₹{{ total_expense }}</p>
+        </div>
+    </div>
+
+    <div class="expense-list-container">
+        <h3>All Expenses</h3>
+        <div class="expense-list">
+            {% for row in expenses %}
+            <div class="expense-item">
+                <div class="expense-icon">
+                    <i class="fas fa-receipt"></i>
+                </div>
+                <div class="expense-details">
+                    <div class="expense-category">{{ row['Category'] }}</div>
+                    {% if row.get('Note') %}
+                    <div class="expense-note">{{ row['Note'] }}</div>
+                    {% endif %}
+                    <div class="expense-date">{{ row.get('Date', '') }}</div>
+                </div>
+                <div class="expense-amount">₹{{ row['Amount'] }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

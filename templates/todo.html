@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}To-Do's | CashFlow{% endblock %}
+
+{% block content %}
+<div class="todo-page">
+    <header class="page-header">
+        <h2><i class="fas fa-list-check"></i> To-Do's</h2>
+        <p>Payments & reminders</p>
+    </header>
+
+    <div class="todo-controls">
+        <form action="{{ url_for('add_todo') }}" method="POST" class="todo-form">
+            <div class="input-with-icon">
+                <i class="fas fa-pen"></i>
+                <input type="text" name="task" placeholder="e.g., Pay rent, buy groceries..." required>
+            </div>
+            <button type="submit" class="btn-add">Add Task <i class="fas fa-plus"></i></button>
+        </form>
+    </div>
+
+    <div class="todo-list-container">
+        <h3>Your Tasks</h3>
+        <div class="todo-list">
+            {% for task in todo_list %}
+            <div class="todo-item">
+                <div class="todo-text">{{ task }}</div>
+                <a href="{{ url_for('delete_todo', index=loop.index0) }}" class="delete-btn">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

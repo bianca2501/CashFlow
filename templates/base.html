@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}💰 CashFlow{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+
+        <nav class="sidenav">
+            <div class="nav-header">
+                <h1>💰 CashFlow</h1>
+                <p>Track your coins</p>
+            </div>
+            
+            <ul class="nav-links">
+                <li>
+                    <a href="{{ url_for('dashboard') }}" class="{% if request.path == url_for('dashboard') %}active{% endif %}">
+                        <i class="fas fa-home"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('expenses') }}" class="{% if request.path == url_for('expenses') %}active{% endif %}">
+                        <i class="fas fa-wallet"></i> Expenses
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('todo') }}" class="{% if request.path == url_for('todo') %}active{% endif %}">
+                        <i class="fas fa-list-check"></i> To-Do's
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="nav-footer">
+                <p>Stay on top of your money 💸</p>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
